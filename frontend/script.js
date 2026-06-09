@@ -1,56 +1,51 @@
-let add=document.querySelector(".add");
-let tasks=document.querySelector(".tasks");
-let textarea=document.querySelector(".textarea")
-let checkbox=document.querySelector(".check")
+const express = require('express');
+const mongoose = require("mongoose");
 
-async function addtask() {
-    let text=textarea.value;      
-await fetch("https://to-do-list-uzqy.onrender.com/tasks", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: text, done: false })
-    });
-render();                   
-}
+const app = express();
+app.use(express.json());
 
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    res.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PATCH");
+    next();
+});
 
+app.options("*", (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    res.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PATCH");
+    res.sendStatus(200);
+});
 
+mongoose.connect(process.env.MONGO_URL)
+    .then(() => console.log("MongoDB connected"))
+    .catch((err) => console.log(err));
 
-async function render() {
-   const response = await fetch("https://to-do-list-uzqy.onrender.com/tasks");
-    const tasksArray = await response.json();
+const taskSchema = new mongoose.Schema({ text: String, done: Boolean });
+const Task = mongoose.model("Task", taskSchema);
 
-    tasks.innerHTML = "";
-    tasksArray.forEach((task) => {
-        let li = document.createElement("li");
-        li.innerHTML = `<input type="checkbox"> <span>${task.text}</span> <button class="remove">x</button>`;
-        let remove = li.querySelector(".remove");
- remove.addEventListener("click",async () => {
-    await fetch(`https://to-do-list-uzqy.onrender.com/tasks/${task._id}`, {
-        method: "DELETE",
-    });
-    await render();
-})
+app.get("/tasks", async (req, res) => {
+    const tasks = await Task.find();
+    res.json(tasks);
+});
 
-        let checkbox = li.querySelector("input");
-        let span = li.querySelector("span");
-checkbox.checked = task.done;  // restore checkbox state
-if (task.done) span.style.textDecoration = "line-through";  // restore strikethrough
-        checkbox.addEventListener("change", () => {
-            task.done = checkbox.checked;
-            if (checkbox.checked) span.style.textDecoration = "line-through";
-            else span.style.textDecoration = "none";
-        })
+app.post("/tasks", async (req, res) => {
+    const task = new Task({ text: req.body.text, done: false });
+    await task.save();
+    res.json(task);
+});
 
-        tasks.appendChild(li);
-    })
-}
+app.patch("/tasks/:id", async (req, res) => {
+    const task = await Task.findByIdAndUpdate(req.params.id, { done: req.body.done }, { new: true });
+    res.json(task);
+});
 
+app.delete("/tasks/:id", async (req, res) => {
+    await Task.findByIdAndDelete(req.params.id);
+    res.json({ deleted: req.params.id });
+});
 
-add.addEventListener("click", () => {
-    if (textarea.value.trim() === "") return;
-    addtask();
-    textarea.value = "";
-})
-
-render();
+app.listen(3000, () => {
+    console.log("Port 3000 connected");
+});
