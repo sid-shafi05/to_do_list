@@ -3,57 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Task Master</title>
+    <title>To Do List</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="ambient-light"></div>
-    <div class="ambient-light light-2"></div>
-    
     <div class="container">
-      <div class="header">
-        <div class="date" id="currentDate"></div>
-        <h1>Task Master</h1>
-        <div class="stats">
-          <span id="taskCount">0</span> tasks
-        </div>
+      <div class="title"><h2>To Do List</h2></div>
+      <div class="textBox">
+        <textarea
+          class="textarea"
+          name="todo"
+          placeholder="Add a task"
+        ></textarea>
+        <button class="add">Add</button>
       </div>
-
-      <div class="input-wrapper">
-        <div class="input-glow">
-          <input 
-            type="text" 
-            class="task-input" 
-            placeholder="What needs to be done?" 
-            maxlength="100"
-          />
-          <button class="add-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <line x1="12" y1="5" x2="12" y2="19"></line>
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      <div class="filters">
-        <button class="filter active" data-filter="all">All</button>
-        <button class="filter" data-filter="active">Active</button>
-        <button class="filter" data-filter="completed">Completed</button>
-      </div>
-
-      <ul class="tasks"></ul>
-
-      <div class="empty-state">
-        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-          <path d="M9 11l3 3L22 4"></path>
-          <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-        </svg>
-        <p>All caught up!</p>
-        <span>Add a task to get started</span>
+      <div class="taskBox">
+        <ul class="tasks"></ul>
       </div>
     </div>
-
     <script src="script.js"></script>
   </body>
 </html>
