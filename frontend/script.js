@@ -5,7 +5,7 @@ let checkbox=document.querySelector(".check")
 
 async function addtask() {
     let text=textarea.value;      
-await fetch("http://localhost:3000/tasks", {
+await fetch("https://to-do-list-uzqy.onrender.com/tasks", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: text, done: false })
@@ -17,7 +17,7 @@ render();
 
 
 async function render() {
-   const response = await fetch("http://localhost:3000/tasks");
+   const response = await fetch("https://to-do-list-uzqy.onrender.com/tasks");
     const tasksArray = await response.json();
 
     tasks.innerHTML = "";
@@ -26,7 +26,7 @@ async function render() {
         li.innerHTML = `<input type="checkbox"> <span>${task.text}</span> <button class="remove">x</button>`;
         let remove = li.querySelector(".remove");
  remove.addEventListener("click",async () => {
-    await fetch(`http://localhost:3000/tasks/${task._id}`, {
+    await fetch(`https://to-do-list-uzqy.onrender.com/tasks/${task._id}`, {
         method: "DELETE",
     });
     await render();
