@@ -9,6 +9,22 @@
   <body>
     <div class="container">
       <div class="title"><h2>To Do List</h2></div>
+      
+      <div class="stats">
+        <div class="stat-box">
+          <span class="stat-num" id="totalCount">0</span>
+          <span class="stat-label">Total</span>
+        </div>
+        <div class="stat-box active">
+          <span class="stat-num" id="activeCount">0</span>
+          <span class="stat-label">Active</span>
+        </div>
+        <div class="stat-box completed">
+          <span class="stat-num" id="completedCount">0</span>
+          <span class="stat-label">Done</span>
+        </div>
+      </div>
+
       <div class="textBox">
         <textarea
           class="textarea"
@@ -17,8 +33,27 @@
         ></textarea>
         <button class="add">Add</button>
       </div>
-      <div class="taskBox">
-        <ul class="tasks"></ul>
+
+      <div class="sections">
+        <div class="section" id="activeSection">
+          <div class="section-header">
+            <span class="section-title">Active</span>
+            <span class="section-count" id="activeBadge">0</span>
+          </div>
+          <div class="taskBox">
+            <ul class="tasks" id="activeTasks"></ul>
+          </div>
+        </div>
+
+        <div class="section" id="completedSection">
+          <div class="section-header">
+            <span class="section-title">Completed</span>
+            <span class="section-count" id="completedBadge">0</span>
+          </div>
+          <div class="taskBox">
+            <ul class="tasks" id="completedTasks"></ul>
+          </div>
+        </div>
       </div>
     </div>
     <script src="script.js"></script>

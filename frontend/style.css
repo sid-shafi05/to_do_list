@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 body {
     color: aliceblue;
     margin: 0;
@@ -7,8 +9,50 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: #0a0a0f;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    width: 700px;
+    height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 70%);
+    filter: blur(100px);
+    top: -250px;
+    left: -250px;
+    pointer-events: none;
+    animation: float1 18s infinite ease-in-out;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+    filter: blur(100px);
+    bottom: -200px;
+    right: -200px;
+    pointer-events: none;
+    animation: float2 22s infinite ease-in-out;
+}
+
+@keyframes float1 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(80px, -60px) scale(1.15); }
+    66% { transform: translate(-40px, 40px) scale(0.9); }
+}
+
+@keyframes float2 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(-60px, 40px) scale(1.2); }
+    66% { transform: translate(50px, -70px) scale(0.85); }
 }
 
 .container {
@@ -18,31 +62,82 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 16px;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    padding: 32px;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
+    gap: 20px;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 28px;
+    padding: 40px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    position: relative;
+    z-index: 1;
 }
 
 .title h2 {
     margin: 0;
-    font-size: 2rem;
-    font-weight: 700;
-    background: linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
-    background-size: 300% 300%;
+    font-size: 2.2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #fff 0%, #c7d2fe 50%, #a5b4fc 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: gradientShift 6s ease infinite;
-    text-shadow: none;
+    letter-spacing: -0.5px;
 }
 
-@keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+.stats {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    justify-content: center;
+}
+
+.stat-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 16px 24px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    min-width: 80px;
+    transition: all 0.3s ease;
+}
+
+.stat-box:hover {
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateY(-2px);
+}
+
+.stat-box.active {
+    border-color: rgba(99, 102, 241, 0.3);
+    background: rgba(99, 102, 241, 0.08);
+}
+
+.stat-box.completed {
+    border-color: rgba(16, 185, 129, 0.3);
+    background: rgba(16, 185, 129, 0.08);
+}
+
+.stat-num {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.stat-box.active .stat-num {
+    color: #818cf8;
+}
+
+.stat-box.completed .stat-num {
+    color: #34d399;
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: rgba(255, 255, 255, 0.4);
+    font-weight: 500;
 }
 
 .textBox {
@@ -55,49 +150,97 @@ body {
 
 .textarea {
     width: 350px;
-    border-radius: 12px;
+    border-radius: 16px;
     resize: none;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.05);
     color: white;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    padding: 12px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 14px 18px;
     font-family: inherit;
     font-size: 1rem;
     transition: all 0.3s ease;
     outline: none;
-    height: 44px;
-    line-height: 20px;
+    height: 52px;
+    line-height: 24px;
 }
 
 .textarea:focus {
-    border-color: #ff6b6b;
-    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2), 0 0 20px rgba(255, 107, 107, 0.1);
+    border-color: #6366f1;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15), 0 0 30px rgba(99, 102, 241, 0.1);
 }
 
 .textarea::placeholder {
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.3);
 }
 
 .add {
-    background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
     color: white;
     border: none;
-    border-radius: 12px;
-    padding: 0 24px;
+    border-radius: 14px;
+    padding: 0 28px;
     font-weight: 600;
     font-size: 1rem;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
 }
 
 .add:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+    box-shadow: 0 8px 30px rgba(99, 102, 241, 0.4);
 }
 
 .add:active {
-    transform: translateY(0);
+    transform: translateY(0) scale(0.97);
+}
+
+.sections {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.section {
+    width: 100%;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    padding: 0 4px;
+}
+
+.section-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.section-count {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.6);
+    min-width: 24px;
+    text-align: center;
+}
+
+#activeBadge {
+    background: rgba(99, 102, 241, 0.2);
+    color: #818cf8;
+}
+
+#completedBadge {
+    background: rgba(16, 185, 129, 0.2);
+    color: #34d399;
 }
 
 .taskBox {
@@ -119,61 +262,147 @@ body {
     width: 100%;
     margin-bottom: 0;
     background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
     color: white;
     display: flex;
     align-items: center;
     gap: 12px;
     transition: all 0.3s ease;
-    animation: slideIn 0.3s ease;
+    animation: slideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
 }
 
 @keyframes slideIn {
     from {
         opacity: 0;
-        transform: translateY(-8px);
+        transform: translateY(-12px) scale(0.95);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 }
 
 .tasks li:hover {
     background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.15);
-    transform: translateX(4px);
+    transform: translateX(6px);
+    border-color: rgba(255, 255, 255, 0.12);
 }
 
-.tasks button {
-    margin-left: auto;
+.tasks li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: #6366f1;
+    border-radius: 14px 0 0 14px;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.tasks li:hover::before {
+    opacity: 1;
+}
+
+.tasks li.completed {
+    opacity: 0.6;
+}
+
+.tasks li.completed::before {
+    background: #10b981;
+    opacity: 1;
+}
+
+.tasks li.completed span {
+    text-decoration: line-through;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.tasks li input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
-    width: 24px;
-    height: 24px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
     cursor: pointer;
-    background: rgba(255, 107, 107, 0.2);
-    border: 1px solid rgba(255, 107, 107, 0.3);
-    color: #ff6b6b;
+    appearance: none;
+    -webkit-appearance: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.tasks li input[type="checkbox"]:hover {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+}
+
+.tasks li input[type="checkbox"]:checked {
+    background: #10b981;
+    border-color: #10b981;
+}
+
+.tasks li input[type="checkbox"]:checked::after {
+    content: '';
+    width: 6px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    position: absolute;
+    top: 2px;
+}
+
+.tasks li span {
+    flex: 1;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    word-break: break-word;
+    transition: all 0.3s ease;
+}
+
+.tasks li button.remove {
+    margin-left: auto;
+    border-radius: 8px;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
     opacity: 0;
-    font-size: 12px;
+    font-size: 16px;
     padding: 0;
 }
 
-.tasks li:hover button {
+.tasks li:hover button.remove {
     opacity: 1;
 }
 
-.tasks button:hover {
-    background: #ff6b6b;
-    color: white;
-    transform: rotate(90deg);
+.tasks li button.remove:hover {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    transform: rotate(90deg) scale(1.1);
 }
 
 input {
     border: none;
+}
+
+.empty-msg {
+    text-align: center;
+    padding: 24px;
+    color: rgba(255, 255, 255, 0.2);
+    font-size: 0.9rem;
+    font-style: italic;
 }

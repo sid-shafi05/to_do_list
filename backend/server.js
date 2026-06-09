@@ -16,7 +16,7 @@ app.use(express.json());
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Content-Type");
-    res.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PATCH");
+    res.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PATCH, PUT");
     next();
 });
 
@@ -36,7 +36,14 @@ app.delete("/tasks/:id", async (req,res)=>{
     res.json({ deleted: req.params.id });
 });
 
-
+app.patch("/tasks/:id", async (req, res) => {
+    const task = await Task.findByIdAndUpdate(
+        req.params.id,
+        { done: req.body.done },
+        { new: true }
+    );
+    res.json(task);
+});
 app.listen(3000,()=>{
     console.log("Port 3000 connected");
 });
